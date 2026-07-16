@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { withBase } from '../utils/withBase';
+---
+
+<Base
+  title="Sidan hittades inte — Teater För Alla"
+  description="Sidan du letar efter finns inte. Ridån har gått ner — men föreställningen fortsätter på startsidan."
+>
+  <section class="section notfound">
+    <div class="container notfound-inner">
+      <p class="notfound-code" aria-hidden="true">4🎭4</p>
+      <h1>Ridån har gått ner</h1>
+      <p class="lede">
+        Sidan du letar efter står inte på scen ikväll. Men lugn — föreställningen fortsätter
+        på startsidan.
+      </p>
+      <div class="notfound-actions">
+        <a href={withBase('/')} class="btn btn--primary">
+          Till startsidan <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a href={withBase('/forestallningar/')} class="btn btn--ghost">Se repertoaren</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .notfound {
+    min-height: 55vh;
+    display: grid;
+    align-items: center;
+  }
+
+  .notfound-inner {
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+  }
+
+  .notfound-code {
+    font-family: var(--font-display);
+    font-size: var(--step-6);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .notfound h1 {
+    font-size: var(--step-4);
+  }
+
+  .notfound .lede {
+    margin-top: 0;
+  }
+
+  .notfound-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+</style>

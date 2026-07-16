@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import WorkshopCard from '../../components/WorkshopCard.astro';
+import { withBase } from '../../utils/withBase';
+
+const workshops = (await getCollection('workshops')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base
+  title="Workshops — Teater För Alla"
+  description="Kreativa workshops där fantasi och skapande får ta plats: ulldockor, dockverkstad, tarboush, dockteaterverkstad, fotografi och teaterkurs — för skolor, bibliotek och kulturhus."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow reveal">Skapa med oss</p>
+      <h1 class="section-title reveal">Workshops</h1>
+      <p class="lede reveal">
+        Kreativa workshops där fantasi och skapande får ta plats. Vi kommer till er skola,
+        ert bibliotek eller ert kulturhus — med väskor fulla av ull, tyg och berättelser.
+      </p>
+    </div>
+  </section>
+
+  <section class="container" aria-label="Våra workshops">
+    <div class="show-grid">
+      {workshops.map((workshop, i) => <WorkshopCard workshop={workshop} index={i} />)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container booking-note reveal">
+      <h2>Skräddarsydda upplägg</h2>
+      <p>
+        Alla workshops anpassas efter grupp, ålder och lokal — och kan kombineras med en
+        föreställning för en hel temadag. <a href={withBase('/kontakt/')}>Kontakta oss</a> för förslag
+        och offert.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .booking-note {
+    text-align: center;
+    max-width: 44rem;
+  }
+
+  .booking-note h2 {
+    font-size: var(--step-3);
+  }
+
+  .booking-note p {
+    margin-top: 0.8rem;
+    color: var(--ink-soft);
+  }
+</style>

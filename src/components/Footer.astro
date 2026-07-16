@@ -1,0 +1,153 @@
+---
+import { withBase } from '../utils/withBase';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <p class="footer-logo">Teater <em>För Alla</em></p>
+      <p class="footer-tagline">Lokal konst med globalt perspektiv.</p>
+      <p class="footer-note">
+        Vi förenar konst och samhällsfrågor för alla — dockteater, workshops och berättande.
+        Baserade i Järfälla, Stockholm och Malmö.
+      </p>
+    </div>
+
+    <nav class="footer-col" aria-label="Sidfotsmeny">
+      <h2>Utforska</h2>
+      <ul>
+        <li><a href={withBase('/forestallningar/')}>Föreställningar</a></li>
+        <li><a href={withBase('/workshops/')}>Workshops</a></li>
+        <li><a href={withBase('/berattelser/')}>Berättelser</a></li>
+        <li><a href={withBase('/samarbete/')}>Samarbete</a></li>
+        <li><a href={withBase('/om-oss/')}>Om oss</a></li>
+        <li><a href={withBase('/kontakt/')}>Kontakt & bokning</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer-col">
+      <h2>Kontakta oss</h2>
+      <ul>
+        <li><a href="mailto:info@teaterforalla.se">info@teaterforalla.se</a></li>
+        <li><a href="tel:+46767022640">+46 76 702 26 40</a></li>
+        <li><a href="tel:+46722995176">+46 72 299 51 76</a></li>
+      </ul>
+      <p class="footer-cities">Järfälla · Stockholm · Malmö</p>
+    </div>
+
+    <div class="footer-col">
+      <h2>Följ oss</h2>
+      <ul>
+        <li><a href="https://www.instagram.com/teaterforalla" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.facebook.com/teaterforalla" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.linkedin.com/" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© {year} Teater För Alla. Alla är välkomna att uppleva magin!</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    background: var(--paper-deep);
+    padding-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .footer-logo em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .footer-tagline {
+    margin-top: 0.4rem;
+    color: var(--accent);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 650;
+  }
+
+  .footer-note {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: var(--step--1);
+    max-width: 36ch;
+  }
+
+  .footer-col h2 {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 680;
+    margin-bottom: 1rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .footer-col a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: var(--step--1);
+  }
+
+  .footer-col a:hover {
+    color: var(--accent);
+  }
+
+  .footer-cities {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+
+  .footer-bottom {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+
+  @media (max-width: 860px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

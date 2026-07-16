@@ -1,0 +1,104 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../utils/withBase';
+
+interface Props {
+  workshop: CollectionEntry<'workshops'>;
+  index?: number;
+}
+
+const { workshop, index = 0 } = Astro.props;
+const { title, tagline, image, imageAlt, facts, badge } = workshop.data;
+const chips = facts.slice(0, 2);
+---
+
+<article class="ws-card card reveal" style={`--reveal-delay: ${Math.min(index * 0.08, 0.4)}s;`}>
+  <div class="photo poster">
+    <Image src={image} alt={imageAlt} widths={[480, 768, 960]} sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 350px" />
+    {badge && <span class="badge poster-badge">{badge}</span>}
+  </div>
+  <div class="body">
+    <h3 class="title">
+      <a href={withBase(`/workshops/${workshop.id}/`)}>{title}</a>
+    </h3>
+    <p class="tagline">{tagline}</p>
+    <p class="meta">
+      {chips.map((fact) => <span class="chip">{fact.value}</span>)}
+    </p>
+  </div>
+</article>
+
+<style>
+  .ws-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition:
+      transform 0.35s var(--ease-out),
+      box-shadow 0.35s var(--ease-out);
+  }
+
+  .ws-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .poster {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ws-card:hover .poster img {
+    transform: scale(1.05);
+  }
+
+  .poster-badge {
+    position: absolute;
+    top: 0.9rem;
+    left: 0.9rem;
+    box-shadow: 0 6px 16px -6px rgb(48 32 20 / 0.4);
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1.35rem 1.5rem 1.5rem;
+    flex: 1;
+  }
+
+  .title {
+    font-size: var(--step-2);
+  }
+
+  .title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .ws-card:hover .title a {
+    color: var(--accent);
+  }
+
+  .tagline {
+    color: var(--muted);
+    font-size: var(--step--1);
+    flex: 1;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.4rem;
+  }
+</style>

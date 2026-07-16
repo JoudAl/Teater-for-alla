@@ -1,0 +1,405 @@
+/* ============================================================
+   Teater För Alla — design system
+   Light, contemporary, editorial: warm paper, ink type,
+   terracotta accents and real stage photography.
+   ============================================================ */
+
+:root {
+  /* Palette */
+  --paper: #faf7f1;
+  --paper-deep: #f3eee4;
+  --surface: #ffffff;
+  --line: #e8e0d3;
+  --ink: #27202f;
+  --ink-soft: #4c4356;
+  --muted: #6f6679;
+  --accent: #bf4128;
+  --accent-deep: #97311d;
+  --accent-soft: #f7e5df;
+  --gold: #d9920b;
+  --gold-soft: #f8ecd4;
+  --plum: #5c3d75;
+
+  /* Type */
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, sans-serif;
+
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.94rem);
+  --step-0: clamp(1rem, 0.96rem + 0.22vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.13rem + 0.36vw, 1.4rem);
+  --step-2: clamp(1.44rem, 1.32rem + 0.61vw, 1.77rem);
+  --step-3: clamp(1.73rem, 1.53rem + 0.98vw, 2.28rem);
+  --step-4: clamp(2.07rem, 1.77rem + 1.52vw, 2.92rem);
+  --step-5: clamp(2.49rem, 2.03rem + 2.29vw, 3.75rem);
+  --step-6: clamp(2.99rem, 2.31rem + 3.37vw, 4.85rem);
+
+  /* Rhythm */
+  --space-section: clamp(4rem, 3rem + 5vw, 7.5rem);
+  --container: 74rem;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --radius: 1.25rem;
+  --radius-sm: 0.65rem;
+
+  --shadow-card: 0 1px 2px rgb(48 32 20 / 0.06), 0 20px 40px -24px rgb(48 32 20 / 0.22);
+  --shadow-lift: 0 2px 4px rgb(48 32 20 / 0.07), 0 28px 48px -22px rgb(48 32 20 / 0.3);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+}
+
+/* ---------- Reset & base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 560;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--accent-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff7f3;
+}
+
+/* ---------- Utilities ---------- */
+
+.container {
+  width: min(var(--container), 100% - var(--gutter) * 2);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--space-section);
+  position: relative;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transform: translateY(-300%);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Eyebrow label above headings */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--step--1);
+  font-weight: 680;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 2rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.section-title {
+  font-size: var(--step-4);
+  margin-top: 0.75rem;
+  max-width: 24ch;
+}
+
+.lede {
+  font-size: var(--step-1);
+  color: var(--ink-soft);
+  max-width: 58ch;
+  margin-top: 1.1rem;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 620;
+  font-size: var(--step-0);
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out),
+    background-color 0.25s,
+    color 0.25s,
+    border-color 0.25s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: #fff7f3;
+  box-shadow: 0 12px 26px -12px rgb(191 65 40 / 0.55);
+}
+
+.btn--primary:hover {
+  background: var(--accent-deep);
+  color: #fff7f3;
+  box-shadow: 0 16px 32px -12px rgb(191 65 40 / 0.6);
+}
+
+.btn--ghost {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: transparent;
+}
+
+.btn--ghost:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn .arrow {
+  transition: transform 0.25s var(--ease-out);
+}
+
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ---------- Chips / badges ---------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: var(--step--1);
+  font-weight: 560;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--gold-soft);
+  color: #7c5304;
+  border: 1px solid #ecd9ad;
+  font-weight: 700;
+  font-size: var(--step--1);
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+/* Photo frame used inside cards & heroes */
+.photo {
+  overflow: hidden;
+  background: var(--paper-deep);
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+
+/* ---------- Scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Prose (markdown bodies) ---------- */
+
+.prose {
+  max-width: 62ch;
+  color: var(--ink-soft);
+}
+
+.prose p + p {
+  margin-top: 1.1em;
+}
+
+.prose h2,
+.prose h3 {
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
+}
+
+.prose ul {
+  padding-left: 1.2em;
+  margin-block: 1.1em;
+}
+
+.prose li + li {
+  margin-top: 0.45em;
+}
+
+.prose strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+/* ---------- Shared page header ---------- */
+
+.page-head {
+  padding-block: clamp(3.5rem, 3rem + 3vw, 6rem) clamp(2.5rem, 4vw, 4rem);
+}
+
+/* ---------- Shared grids ---------- */
+
+.show-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1.5rem;
+}
+
+/* ---------- Fact list (Snabbfakta) ---------- */
+
+.facts dl {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.facts dt {
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 640;
+}
+
+.facts dd {
+  margin: 0.15rem 0 0;
+  font-weight: 560;
+  color: var(--ink);
+}
