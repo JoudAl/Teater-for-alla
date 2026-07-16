@@ -1,0 +1,126 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { withBase } from '../utils/withBase';
+
+import alhakawati from '../assets/site/alhakawati.jpg';
+import hakayaZinab from '../assets/site/hakaya-zinab.jpg';
+
+const stories = [
+  {
+    title: 'Alhakawati',
+    image: alhakawati,
+    alt: 'Alhakawati — berättaren på scen',
+    text: 'I den klassiska hakawati-traditionen får publiken möta berättaren själv: sagor, fabler och folksägner framförda live, med röst, rytm och stor närvaro. Ett projekt med stöd av Konstnärsnämnden.',
+  },
+  {
+    title: 'Hakaya Zinab',
+    image: hakayaZinab,
+    alt: 'Hakaya Zinab — berättarstund på scen',
+    text: 'Berättarstunder där sagor från olika delar av världen vävs samman med musik och lek. Berättelser som väcker fantasi och känslor till liv — för barn, familjer och alla som älskar en god historia.',
+  },
+];
+---
+
+<Base
+  title="Berättelser — Teater För Alla"
+  description="Muntligt berättande i hakawati-tradition: sagor och folksägner från hela världen som väcker fantasi och känslor till liv. Boka en berättarstund till bibliotek, skola eller festival."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow reveal">Sagor & berättande</p>
+      <h1 class="section-title reveal">Berättelser</h1>
+      <p class="lede reveal">
+        Där konst och fantasi möts. Muntligt berättande som väcker fantasi och känslor till
+        liv — framfört live, nära och direkt, så som sagor alltid har berättats.
+      </p>
+    </div>
+  </section>
+
+  <section class="container" aria-label="Våra berättarföreställningar">
+    <div class="story-grid">
+      {
+        stories.map((story, i) => (
+          <article class="card story reveal" style={`--reveal-delay: ${i * 0.1}s`}>
+            <div class="photo story-photo">
+              <Image src={story.image} alt={story.alt} widths={[600, 900, 1200]} sizes="(max-width: 780px) 92vw, 550px" />
+            </div>
+            <div class="story-body">
+              <h2>{story.title}</h2>
+              <p>{story.text}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container booking-note reveal">
+      <h2>Boka en berättarstund</h2>
+      <p>
+        Våra berättelser passar bibliotek, skolor, festivaler och kulturhus — och anpassas
+        efter publik och tillfälle. <a href={withBase('/kontakt/')}>Hör av er</a> så berättar vi mer.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 1.5rem;
+  }
+
+  .story {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.35s var(--ease-out),
+      box-shadow 0.35s var(--ease-out);
+  }
+
+  .story:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .story-photo {
+    aspect-ratio: 16 / 10;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .story:hover .story-photo img {
+    transform: scale(1.04);
+  }
+
+  .story-body {
+    padding: 1.6rem 1.7rem 1.8rem;
+  }
+
+  .story-body h2 {
+    font-size: var(--step-2);
+  }
+
+  .story-body p {
+    margin-top: 0.6rem;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+
+  .booking-note {
+    text-align: center;
+    max-width: 44rem;
+  }
+
+  .booking-note h2 {
+    font-size: var(--step-3);
+  }
+
+  .booking-note p {
+    margin-top: 0.8rem;
+    color: var(--ink-soft);
+  }
+</style>

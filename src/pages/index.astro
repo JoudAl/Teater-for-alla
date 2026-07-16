@@ -1,0 +1,514 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ShowCard from '../components/ShowCard.astro';
+import { withBase } from '../utils/withBase';
+
+import hero1 from '../assets/site/hero-1.jpg';
+import hero2 from '../assets/site/hero-2.jpg';
+import hero3 from '../assets/site/hero-3.jpg';
+import kursPoster from '../assets/site/kurs-poster.png';
+import katForestallningar from '../assets/site/kategori-forestallningar.jpg';
+import katWorkshops from '../assets/site/kategori-workshops.jpg';
+import katBerattelser from '../assets/site/kategori-berattelser.jpg';
+
+const shows = (await getCollection('shows'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .filter((s) => s.data.featured)
+  .slice(0, 4);
+
+const categories = [
+  {
+    href: '/forestallningar/',
+    image: katForestallningar,
+    alt: 'Dockteaterföreställning på scen',
+    title: 'Föreställningar',
+    text: 'Magiska dockteaterföreställningar för alla åldrar.',
+  },
+  {
+    href: '/workshops/',
+    image: katWorkshops,
+    alt: 'Barn skapar dockor i en workshop',
+    title: 'Workshops',
+    text: 'Kreativa workshops där fantasi och skapande får ta plats.',
+  },
+  {
+    href: '/berattelser/',
+    image: katBerattelser,
+    alt: 'Berättare på scen',
+    title: 'Berättelser',
+    text: 'Berättelser som väcker fantasi och känslor till liv.',
+  },
+];
+
+const marquee = ['Dockteater', 'Workshops', 'Berättande', 'Sagor', 'För alla åldrar'];
+---
+
+<Base
+  title="Teater För Alla — Lokal konst med globalt perspektiv"
+  description="Teater För Alla förenar konst och samhällsfrågor för alla: dockteater, workshops och berättande i Järfälla, Stockholm och Malmö. Alla är välkomna att uppleva magin!"
+>
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Teater · Dockteater · Berättande</p>
+        <h1 class="hero-title reveal" style="--reveal-delay: 0.08s">
+          Lokal konst med <em>globalt</em> perspektiv
+        </h1>
+        <p class="lede reveal" style="--reveal-delay: 0.16s">
+          Vi förenar konst och samhällsfrågor för alla. Handgjorda dockor, levande berättande
+          och föreställningar som rest över världen — alla är välkomna att uppleva magin!
+        </p>
+        <div class="hero-actions reveal" style="--reveal-delay: 0.24s">
+          <a href={withBase('/forestallningar/')} class="btn btn--primary">
+            Se föreställningar <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href={withBase('/kontakt/')} class="btn btn--ghost">Boka oss</a>
+        </div>
+        <dl class="hero-stats reveal" style="--reveal-delay: 0.32s">
+          <div>
+            <dt>Spelade föreställningar</dt>
+            <dd>150+</dd>
+          </div>
+          <div>
+            <dt>Års erfarenhet</dt>
+            <dd>15</dd>
+          </div>
+          <div>
+            <dt>Städer</dt>
+            <dd>3</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="hero-collage reveal" style="--reveal-delay: 0.15s" aria-hidden="true">
+        <div class="photo collage-main">
+          <Image src={hero1} alt="" widths={[600, 900, 1200]} sizes="(max-width: 880px) 92vw, 560px" loading="eager" />
+        </div>
+        <div class="photo collage-a">
+          <Image src={hero2} alt="" widths={[400, 600]} sizes="260px" loading="eager" />
+        </div>
+        <div class="photo collage-b">
+          <Image src={hero3} alt="" widths={[400, 600]} sizes="260px" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Marquee ===== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {
+        [0, 1].map(() => (
+          <span class="marquee-group">
+            {marquee.map((word) => (
+              <span class="marquee-item">
+                {word} <span class="marquee-star">✦</span>
+              </span>
+            ))}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ===== Aktuellt ===== -->
+  <section class="section" aria-labelledby="aktuellt-titel">
+    <div class="container notice card reveal">
+      <div class="photo notice-photo">
+        <Image src={kursPoster} alt="Affisch för teaterkursen för barn och unga" widths={[400, 700]} sizes="(max-width: 780px) 92vw, 340px" />
+      </div>
+      <div class="notice-body">
+        <span class="badge">Aktuellt våren 2026</span>
+        <h2 id="aktuellt-titel">Teaterkurs för barn & unga — från 10 år</h2>
+        <p>
+          Vill du stå på scen och skapa dina egna berättelser? I samarbete med
+          <strong>Huset på Höjden</strong> utforskar vi teater genom improvisation och lek —
+          tio måndagar som avslutas med en egen föreställning.
+        </p>
+        <div class="notice-actions">
+          <a href={withBase('/workshops/teaterkurs/')} class="btn btn--primary">
+            Läs mer & säkra din plats <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Kategorier ===== -->
+  <section class="section" aria-labelledby="kategorier-titel">
+    <div class="container">
+      <p class="eyebrow reveal">Våra kategorier</p>
+      <h2 class="section-title reveal" id="kategorier-titel">Skapa, berätta och upplev tillsammans</h2>
+      <div class="category-grid">
+        {
+          categories.map((cat, i) => (
+            <a href={withBase(cat.href)} class="category card reveal" style={`--reveal-delay: ${i * 0.08}s`}>
+              <div class="photo category-photo">
+                <Image src={cat.image} alt={cat.alt} widths={[480, 768]} sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 380px" />
+              </div>
+              <div class="category-body">
+                <h3>{cat.title}</h3>
+                <p>{cat.text}</p>
+                <span class="category-link" aria-hidden="true">
+                  Utforska <span class="arrow">→</span>
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Featured shows ===== -->
+  <section class="section section--deep" aria-labelledby="pascen-titel">
+    <div class="container">
+      <div class="split-heading">
+        <div>
+          <p class="eyebrow reveal">På scen just nu</p>
+          <h2 class="section-title reveal" id="pascen-titel">Ur repertoaren</h2>
+        </div>
+        <a href={withBase('/forestallningar/')} class="btn btn--ghost reveal">
+          Hela repertoaren <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <div class="show-grid home-shows">
+        {shows.map((show, i) => <ShowCard show={show} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Collaboration CTA ===== -->
+  <section class="section">
+    <div class="container cta card reveal">
+      <p class="eyebrow">Samarbete med Teater För Alla</p>
+      <h2>Nå en bred publik med hjärta för scenkonst</h2>
+      <p class="cta-text">
+        Genom ett samarbete med oss syns ni i samband med våra föreställningar, i våra
+        kanaler och på vår webbplats. Vi erbjuder flexibla avtal över 12 månader samt
+        enstaka samarbeten kring evenemang och specialarrangemang.
+      </p>
+      <div class="cta-actions">
+        <a href={withBase('/samarbete/')} class="btn btn--primary">
+          Läs mer om samarbete <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="mailto:info@teaterforalla.se" class="btn btn--ghost">info@teaterforalla.se</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ----- Hero ----- */
+  .hero {
+    padding-block: clamp(3rem, 2rem + 4vw, 6.5rem) clamp(3.5rem, 5vw, 6rem);
+    overflow: clip;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: var(--step-6);
+    margin-top: 1rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2.2rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    margin-top: clamp(2.2rem, 4vw, 3.5rem);
+    padding-top: 1.8rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .hero-stats dt {
+    font-size: var(--step--1);
+    color: var(--muted);
+    order: 2;
+  }
+
+  .hero-stats dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* photo collage */
+  .hero-collage {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 34rem;
+    justify-self: end;
+    width: 100%;
+  }
+
+  .hero-collage .photo {
+    position: absolute;
+    border-radius: var(--radius);
+    border: 4px solid var(--surface);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .collage-main {
+    inset: 4% 0 18% 12%;
+    rotate: 1.5deg;
+  }
+
+  .collage-a {
+    width: 46%;
+    aspect-ratio: 4 / 5;
+    left: 0;
+    bottom: 2%;
+    rotate: -4deg;
+    z-index: 2;
+  }
+
+  .collage-b {
+    width: 38%;
+    aspect-ratio: 4 / 5;
+    right: 2%;
+    bottom: 0;
+    rotate: 3deg;
+    z-index: 2;
+  }
+
+  /* ----- Marquee ----- */
+  .marquee {
+    border-block: 1px solid var(--line);
+    background: var(--surface);
+    overflow: hidden;
+    padding-block: 0.85rem;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+
+  .marquee-group {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.4rem;
+    padding-inline: 0.7rem;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 560;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .marquee-star {
+    color: var(--accent);
+    font-size: 0.8em;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+
+  /* ----- Aktuellt ----- */
+  .notice {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    overflow: hidden;
+  }
+
+  .notice-photo {
+    min-height: 16rem;
+    border-right: 1px solid var(--line);
+  }
+
+  .notice-body {
+    padding: clamp(1.75rem, 4vw, 3rem);
+    display: grid;
+    justify-items: start;
+    align-content: center;
+    gap: 1rem;
+  }
+
+  .notice-body h2 {
+    font-size: var(--step-3);
+  }
+
+  .notice-body p {
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+
+  /* ----- Kategorier ----- */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .category {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-decoration: none;
+    transition:
+      transform 0.35s var(--ease-out),
+      box-shadow 0.35s var(--ease-out);
+  }
+
+  .category:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .category-photo {
+    aspect-ratio: 4 / 3;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .category:hover .category-photo img {
+    transform: scale(1.05);
+  }
+
+  .category-body {
+    padding: 1.35rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .category-body h3 {
+    font-size: var(--step-2);
+  }
+
+  .category:hover h3 {
+    color: var(--accent);
+  }
+
+  .category-body p {
+    color: var(--muted);
+    font-size: var(--step--1);
+    flex: 1;
+  }
+
+  .category-link {
+    color: var(--accent);
+    font-weight: 620;
+    font-size: var(--step--1);
+  }
+
+  .category-link .arrow {
+    display: inline-block;
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .category:hover .category-link .arrow {
+    transform: translateX(4px);
+  }
+
+  /* ----- Shows ----- */
+  .section--deep {
+    background: var(--paper-deep);
+    border-block: 1px solid var(--line);
+  }
+
+  .split-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .home-shows {
+    margin-top: 2.5rem;
+  }
+
+  /* ----- CTA ----- */
+  .cta {
+    text-align: center;
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+  }
+
+  .cta .eyebrow::before {
+    display: none;
+  }
+
+  .cta h2 {
+    font-size: var(--step-4);
+    max-width: 24ch;
+  }
+
+  .cta-text {
+    color: var(--ink-soft);
+    max-width: 56ch;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 880px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-collage {
+      justify-self: center;
+      max-width: 28rem;
+    }
+  }
+
+  @media (max-width: 780px) {
+    .notice {
+      grid-template-columns: 1fr;
+    }
+
+    .notice-photo {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      max-height: 22rem;
+    }
+  }
+</style>

@@ -1,0 +1,217 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import { withBase } from '../utils/withBase';
+
+import vision from '../assets/site/om-vision.jpg';
+import zainab from '../assets/team/zainab.jpg';
+import motaz from '../assets/team/motaz.jpg';
+import ibrahim from '../assets/team/ibrahim.jpg';
+import mustafa from '../assets/team/mustafa.png';
+import johanna from '../assets/team/johanna.jpg';
+import leen from '../assets/team/leen.jpg';
+
+interface Person {
+  name: string;
+  role: string;
+  bio: string;
+  image: ImageMetadata;
+}
+
+const team: Person[] = [
+  {
+    name: 'Zainab Al-Ali',
+    role: 'Skådespelare & regissör',
+    image: zainab,
+    bio: 'Erfaren skådespelare och regissör inom teater och film som kombinerar kreativitet med professionell expertis. Kandidatexamen i teater från Irak och examen i scenkonst från Sverige. Har medverkat i kortfilmer och teaterföreställningar för barn och ungdomar.',
+  },
+  {
+    name: 'Motaz Doghim',
+    role: 'Dramatiker, manusförfattare & skådespelare',
+    image: motaz,
+    bio: 'Erfaren inom berättande, manusförfattande och scenkonst för teater och film, med en kombination av praktisk och akademisk expertis inom scenkonst och socialt arbete.',
+  },
+  {
+    name: 'Ibrahim Tahhan',
+    role: 'Filmskapare & videoproducent',
+    image: ibrahim,
+    bio: 'Filmskapare och videoproducent inom new media. Studerade filmproduktion i Turkiet och har arbetat med flera konstnärliga och dokumentära projekt. Trefaldigt prisbelönt för korta dokumentärfilmer, idag verksam som videoproducent i Sverige.',
+  },
+  {
+    name: 'Mustafa Al Darwish',
+    role: 'Konstnärlig ledare & dockmakare',
+    image: mustafa,
+    bio: 'Specialiserad inom konstnärlig ledning, skådespeleri och dockmakeri. Har genomfört mer än 250 dockteaterföreställningar och teaterworkshops i Sverige och Finland, och fått projektbidrag från Konstnärsnämnden (2021–2024) för projektet Al Hakawati.',
+  },
+  {
+    name: 'Johanna Andersson',
+    role: 'Socionom',
+    image: johanna,
+    bio: 'Socionom sedan 2012, främst inom förebyggande arbete med fokus på barn, ungdomar och föräldrar. Håller i föräldragrupper och samordnar förändringsprocesser, och har i många år drivit jämställdhets- och jämlikhetsarbete.',
+  },
+  {
+    name: 'Leen Hachichou',
+    role: 'Skådespelare, sångerska & låtskrivare',
+    image: leen,
+    bio: 'Utbildad vid Teaterhögskolan i Luleå och verksam som teaterpedagog vid bland annat Kulturama i Stockholm. Har medverkat i produktioner på arabiska med Arabiska Teatern och på svenska med Regionteater Väst och Norrbottensteatern. Tilldelad Andrew-stipendiet för sitt konstnärliga arbete.',
+  },
+];
+---
+
+<Base
+  title="Om oss — Teater För Alla"
+  description="Teater För Alla är en grupp konstnärer som presenterar lokal konst globalt och utforskar samhällsfrågor genom teater och berättande. Möt teamet bakom dockorna."
+>
+  <section class="page-head">
+    <div class="container vision-grid">
+      <div>
+        <p class="eyebrow reveal">Teater för alla — vår vision</p>
+        <h1 class="section-title reveal">Ett öppet utrymme för alla</h1>
+        <p class="lede reveal">
+          Vi är en grupp konstnärer som presenterar lokal konst globalt och utforskar
+          samhällsfrågor genom teater och berättande. Vårt mål är att skapa ett öppet
+          utrymme för alla — en unik teaterupplevelse, för alla.
+        </p>
+      </div>
+      <div class="photo vision-photo reveal" style="--reveal-delay: 0.1s">
+        <Image src={vision} alt="Ensemblen på scen" widths={[600, 900, 1200]} sizes="(max-width: 880px) 92vw, 520px" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="team-titel">
+    <div class="container">
+      <p class="eyebrow reveal">Vårt team</p>
+      <h2 class="section-title reveal" id="team-titel">Människorna bakom dockorna</h2>
+      <div class="team-grid">
+        {
+          team.map((person, i) => (
+            <article class="card person reveal" style={`--reveal-delay: ${(i % 3) * 0.08}s`}>
+              <div class="photo person-photo">
+                <Image src={person.image} alt={`Porträtt av ${person.name}`} widths={[400, 600, 800]} sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 360px" />
+              </div>
+              <div class="person-body">
+                <h3>{person.name}</h3>
+                <p class="person-role">{person.role}</p>
+                <p class="person-bio">{person.bio}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section cities-section">
+    <div class="container cities reveal">
+      <p class="eyebrow">Vart du hittar oss</p>
+      <h2>Stockholm, Järfälla och Malmö</h2>
+      <p>
+        Vi är baserade på flera orter där vi skapar en plattform för lokal konst och
+        kulturell kommunikation — och vi turnerar gärna dit publiken finns.
+      </p>
+      <a href={withBase('/kontakt/')} class="btn btn--primary">
+        Kontakta oss <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .vision-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+
+  .vision-photo {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .person {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.35s var(--ease-out),
+      box-shadow 0.35s var(--ease-out);
+  }
+
+  .person:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .person-photo {
+    aspect-ratio: 1 / 1;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .person:hover .person-photo img {
+    transform: scale(1.04);
+  }
+
+  .person-body {
+    padding: 1.4rem 1.5rem 1.6rem;
+  }
+
+  .person h3 {
+    font-size: var(--step-1);
+  }
+
+  .person-role {
+    color: var(--accent);
+    font-size: var(--step--1);
+    font-weight: 620;
+    margin-top: 0.2rem;
+  }
+
+  .person-bio {
+    margin-top: 0.6rem;
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+
+  .cities-section {
+    background: var(--paper-deep);
+    border-top: 1px solid var(--line);
+  }
+
+  .cities {
+    text-align: center;
+    max-width: 44rem;
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+  }
+
+  .cities .eyebrow::before {
+    display: none;
+  }
+
+  .cities h2 {
+    font-size: var(--step-3);
+  }
+
+  .cities p {
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 880px) {
+    .vision-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

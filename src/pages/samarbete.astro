@@ -1,0 +1,205 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { withBase } from '../utils/withBase';
+
+import samarbeteBild from '../assets/site/samarbete.jpg';
+
+const models = [
+  {
+    title: 'Samarbetsavtal · 12 månader',
+    text: 'Ett flexibelt helårssamarbete där er verksamhet syns i samband med våra föreställningar, på våra sociala medier och på vår webbplats — genom hela säsongen.',
+    points: [
+      'Synlighet vid våra föreställningar under året',
+      'Exponering i våra sociala medier och på webbplatsen',
+      'Ett långsiktigt partnerskap med kulturlivet',
+    ],
+  },
+  {
+    title: 'Enstaka samarbeten',
+    text: 'Stöd ett enskilt evenemang eller specialarrangemang. Ett avgränsat samarbete med tydlig början, tydligt slut och tydlig effekt.',
+    points: [
+      'Synlighet kring ett utvalt evenemang',
+      'Skräddarsytt upplägg efter era mål',
+      'Möjlighet till specialarrangemang i ert namn',
+    ],
+  },
+];
+---
+
+<Base
+  title="Samarbete — Teater För Alla"
+  description="Är ni en verksamhet som vill nå ut till en bred publik med intresse för scenkonst? Vi erbjuder flexibla samarbetsavtal över 12 månader samt enstaka samarbeten kring evenemang."
+>
+  <section class="page-head">
+    <div class="container head-grid">
+      <div>
+        <p class="eyebrow reveal">Samarbete med oss</p>
+        <h1 class="section-title reveal">Nå en bred publik med intresse för scenkonst</h1>
+        <p class="lede reveal">
+          Genom ett samarbete med Teater För Alla får ni möjlighet att synas i samband med
+          våra föreställningar, på våra sociala medier och på vår hemsida.
+        </p>
+        <dl class="stats reveal" style="--reveal-delay: 0.1s">
+          <div>
+            <dt>Spelade föreställningar</dt>
+            <dd>150+</dd>
+          </div>
+          <div>
+            <dt>Års erfarenhet</dt>
+            <dd>15</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="photo head-photo reveal" style="--reveal-delay: 0.1s">
+        <Image src={samarbeteBild} alt="Publik och scen under en föreställning" widths={[600, 900, 1200]} sizes="(max-width: 880px) 92vw, 520px" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <section class="container" aria-label="Samarbetsformer">
+    <div class="model-grid">
+      {
+        models.map((model, i) => (
+          <article class="card model reveal" style={`--reveal-delay: ${i * 0.1}s`}>
+            <h2>{model.title}</h2>
+            <p>{model.text}</p>
+            <ul>
+              {model.points.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container why reveal">
+      <h2>Varför scenkonst?</h2>
+      <p>
+        Ett samarbete med Teater För Alla är ett ställningstagande: ni bidrar till att barn
+        får möta teater, att berättelser från hela världen får plats på svenska scener och
+        att kulturen når också dem som sällan nås.
+      </p>
+      <div class="why-actions">
+        <a href="mailto:info@teaterforalla.se" class="btn btn--primary">
+          Inled ett samtal <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a href={withBase('/kontakt/')} class="btn btn--ghost">Kontaktuppgifter</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+
+  .head-photo {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .stats {
+    display: flex;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    margin-top: 2rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .stats dt {
+    font-size: var(--step--1);
+    color: var(--muted);
+    order: 2;
+  }
+
+  .stats dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .model-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 1.5rem;
+  }
+
+  .model {
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .model h2 {
+    font-size: var(--step-2);
+  }
+
+  .model > p {
+    color: var(--ink-soft);
+  }
+
+  .model ul {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .model li {
+    padding-left: 1.7rem;
+    position: relative;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+
+  .model li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .why {
+    text-align: center;
+    max-width: 46rem;
+    display: grid;
+    justify-items: center;
+    gap: 1.1rem;
+  }
+
+  .why h2 {
+    font-size: var(--step-3);
+  }
+
+  .why p {
+    color: var(--ink-soft);
+  }
+
+  .why-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 880px) {
+    .head-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,235 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/site/logo.png';
+import { withBase } from '../utils/withBase';
+
+const links = [
+  { href: withBase('/forestallningar/'), label: 'Föreställningar' },
+  { href: withBase('/workshops/'), label: 'Workshops' },
+  { href: withBase('/berattelser/'), label: 'Berättelser' },
+  { href: withBase('/samarbete/'), label: 'Samarbete' },
+  { href: withBase('/om-oss/'), label: 'Om oss' },
+];
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href || path.startsWith(href);
+---
+
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a href={withBase('/')} class="brand" aria-label="Teater För Alla – till startsidan">
+      <Image src={logo} alt="" width={300} class="brand-logo" loading="eager" />
+      <span class="brand-name">Teater <em>För Alla</em></span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      data-nav-toggle
+      aria-expanded="false"
+      aria-controls="site-nav"
+    >
+      <span class="visually-hidden">Meny</span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Huvudmeny">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={withBase('/kontakt/')} class="btn btn--primary nav-cta">Boka oss</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(250 247 241 / 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .site-header.is-scrolled {
+    border-bottom-color: var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 0.7rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .brand-logo {
+    width: auto;
+    height: 2.6rem;
+  }
+
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .brand-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  @media (max-width: 420px) {
+    .brand-name {
+      font-size: 1.1rem;
+    }
+  }
+
+  .site-nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.9rem, 2vw, 1.8rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-nav a:not(.nav-cta) {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 560;
+    font-size: var(--step--1);
+    letter-spacing: 0.02em;
+    padding-block: 0.35rem;
+    border-bottom: 2px solid transparent;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+
+  .site-nav a:not(.nav-cta):hover {
+    color: var(--accent);
+  }
+
+  .site-nav a[aria-current='page'] {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .nav-cta {
+    padding: 0.55rem 1.2rem;
+    font-size: var(--step--1);
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .nav-toggle-bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(2) {
+    transform: translateY(4.5px) rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bar:last-child {
+    transform: translateY(-4.5px) rotate(-45deg);
+  }
+
+  @media (max-width: 880px) {
+    .nav-toggle {
+      display: flex;
+    }
+
+    .site-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 30px 50px -20px rgb(48 32 20 / 0.25);
+      padding: 1.25rem var(--gutter) 1.75rem;
+    }
+
+    .site-nav.is-open {
+      display: block;
+    }
+
+    .site-nav ul {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.25rem;
+    }
+
+    .site-nav a:not(.nav-cta) {
+      display: block;
+      padding: 0.7rem 0.25rem;
+      font-size: var(--step-1);
+      font-family: var(--font-display);
+      border-bottom: none;
+    }
+
+    .nav-cta {
+      margin-top: 0.9rem;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const nav = document.getElementById('site-nav');
+
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    nav?.classList.toggle('is-open', !open);
+  });
+</script>
